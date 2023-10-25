@@ -1,10 +1,10 @@
-{ pkgs, lib, nix-colors, username, variables,...}:
-let variables = builtins.fromJSON (builtins.readFile ./variables.json);
-in {
+{ pkgs, lib, inputs, username, variables, ...}:
+{
   home.username = username;
   home.homeDirectory = "/home/${username}";
 
   imports = [
+    inputs.nix-colors.homeManagerModules.default
     ./development.nix
   ];
 
@@ -24,7 +24,7 @@ in {
   ];
 
   colorScheme = let
-    scheme = nix-colors.colorSchemes.gruvbox-dark-medium;
+    scheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
     hashedColors = lib.mapAttrs (_: color: "#${color}") scheme.colors;
   in
     scheme // { inherit hashedColors; };
@@ -86,7 +86,7 @@ in {
     direnv = {
       enable = true;
       nix-direnv.enable = true;
-      enableFishIntegration = true;
+      # enableFishIntegration = true;
     };
 
     fzf = {
@@ -107,10 +107,10 @@ in {
   };
 
   services = {
-      vscode-server.enable = true;
       gpg-agent = {
         enable = true;
         enableSshSupport = true;
+        pinentryFlavor = "tty";
       };
   };
 

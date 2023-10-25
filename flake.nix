@@ -22,13 +22,13 @@
     };
   };
 
-  outputs = { self, ... } @ inputs: let
-    system = "x86_64-linux";
+  outputs = { self, nixpkgs, ... } @ inputs: let
     username = "storm";
     hostname = "nixos";
-    variables = builtins.fromJSON (builtins.readFile ./variables.json);
-    specialArgs = { inherit inputs self; };
+    variables = import ./variables.nix;
   in {
-    nixosConfigurations = import ./hosts (inputs // { inherit system username hostname variables specialArgs; });
+    nixosConfigurations = import ./hosts
+      { inherit inputs self username hostname variables; }
+    ;
   };
 }

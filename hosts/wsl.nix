@@ -1,10 +1,29 @@
-{ self, nixpkgs, nixos-wsl, nix-colors, home-manager, vscode-server, username, hostname, modulesPath, ... }:
+{ self, inputs, username, hostname, variables, modulesPath, ... }:
 {
     imports = [
         "${modulesPath}/profiles/minimal.nix"
-        self.inputs.vscode-server.nixosModules.default
     ];
 
+    home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        sharedModules = [
+
+            ({ lib, ... }: {
+                options.colorScheme.hashedColors = with lib;
+                    mkOption { type = types.attrsOf types.str; };
+            })
+        ];
+
+        extraSpecialArgs = { inherit inputs username hostname variables; };
+
+        users.${username}.imports = [
+            ../user/base.nix
+            ../user/development.nix
+        ];
+    };
+
+    programs.fish.enable = true;
     wsl = {
         enable = true;
         wslConf.automount.root = "/mnt";
@@ -12,7 +31,7 @@
         startMenuLaunchers = true;
         nativeSystemd = true;
         # Enable native Docker support
-        docker-native.enable = true;
+        # docker-native.enable = true;
         # Enable integration with Docker Desktop (needs to be installed)
         docker-desktop.enable = true;
     };

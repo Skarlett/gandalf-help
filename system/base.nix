@@ -1,4 +1,4 @@
-{ pkgs, nixpkgs, username, variables, ... }:
+{ inputs, pkgs, username, variables, ... }:
 {
   time.timeZone = variables.region.timezone or "UTC";
   i18n.defaultLocale = variables.region.locale or "en_US.UTF-8";
@@ -10,7 +10,7 @@
       wget
       fish
       vim
-      nvim
+      neovim
       nerdfonts
     ];
   };
@@ -59,7 +59,7 @@
     };
 
     registry = {
-      nixpkgs.flake = nixpkgs;
+      nixpkgs.flake = inputs.nixpkgs;
       flakes.to = {
         owner = variables.github.username;
         repo = "flakes";
