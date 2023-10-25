@@ -6,8 +6,10 @@
     nil
 
     elixir
-    elixir_ls
-
+    ###
+    # broken package
+    # elixir_ls
+    ###
     nodejs
     nodePackages.typescript-language-server
     nodePackages.prettier
