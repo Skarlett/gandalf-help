@@ -16,7 +16,7 @@
     broot
     direnv
     bat
-    eza
+    # eza
     ripgrep
     lsof
     zip
@@ -31,7 +31,7 @@
 
   programs = {
     bat.enable = true;
-    eza.enable = true;
+    # eza.enable = true;
     home-manager.enable = true;
 
     git = {
@@ -115,10 +115,10 @@
   };
 
   home.shellAliases = {
-    ll = "eza -lFT --group-directories-first --color=always --git --git-ignore --level 1";
-    lla = "eza -laTF --group-directories-first --color=always --git --level 1";
-    llt = "eza -lTF --group-directories-first --color=always --git --git-ignore";
-    llta = "eza -laTF --group-directories-first --color=always --git";
+    # ll = "eza -lFT --group-directories-first --color=always --git --git-ignore --level 1";
+    # lla = "eza -laTF --group-directories-first --color=always --git --level 1";
+    # llt = "eza -lTF --group-directories-first --color=always --git --git-ignore";
+    # llta = "eza -laTF --group-directories-first --color=always --git";
     cat = "bat";
   };
 
